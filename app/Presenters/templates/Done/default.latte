@@ -1,0 +1,23 @@
+
+{block content}
+	
+	<div>
+		{foreach $tasks as $task}
+			<p>
+				<a n:href="Task:show $task->ID">{$task->task}</a>
+			</p>
+		{/foreach}
+	</div>
+
+{/block}
+
+{block scripts}
+
+	{include parent}
+
+{/block}
+
+
+{block head}
+
+{/block}
