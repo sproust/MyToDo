@@ -1,1 +1,7 @@
+.editIcon:hover {
+    color: #0061f2;
+}
 
+.pointer {
+    cursor: pointer;
+}

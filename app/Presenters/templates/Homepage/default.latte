@@ -1,12 +1,28 @@
 
 {block content}
 	
-	<div>
-		{foreach $tasks as $task}
-			<p>
-				<a n:href="task:show $task->ID">{$task->task}</a>
-			</p>
-		{/foreach}
+	<div class="row">
+		<table class="table table-hover col-7 text-center">
+			<thead>
+				<th>Task</th>
+				<th>Deadline</th>
+				<th>Edit</th>
+				<th>Complete</th>
+			</thead>
+			<tbody>
+			{foreach $tasks as $task}
+				<td>{$task->task}</td>
+				<td>Nějaký datum</td>
+				<td><i class="fa fa-edit editIcon pointer"></i></td>
+				<td>
+					<div class="custom-control custom-checkbox">
+						<input class="custom-control-input" id="complete" type="checkbox">
+						<label class="custom-control-label pointer" for="complete"></label>
+					</div>
+				</td>
+			{/foreach}
+			</tbody>
+		</table>
 	</div>
 
 {/block}
