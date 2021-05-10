@@ -18,7 +18,7 @@ session:
 database:
 	dsn: 'mysql:host=127.0.0.1;dbname=todolist'
 	user: 'root'
-	password: 'root'
+	password: ''
 	options:
 		lazy: yes
 
