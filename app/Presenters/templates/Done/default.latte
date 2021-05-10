@@ -11,15 +11,17 @@
 			</thead>
 			<tbody>
 			{foreach $tasks as $task}
-				<td>{$task->task}</td>
-				<td>Nějaký datum</td>
-				<td><i class="fa fa-edit editIcon pointer"></i></td>
-				<td>
-					<div class="custom-control custom-checkbox">
-						<input class="custom-control-input" id="complete" type="checkbox">
-						<label class="custom-control-label pointer" for="complete"></label>
-					</div>
-				</td>
+				<tr>
+					<td>{$task->task}</td>
+					<td>Nějaký datum</td>
+					<td><i class="fa fa-edit editIcon pointer"></i></td>
+					<td>
+						<div class="custom-control custom-checkbox">
+							<input class="custom-control-input" id="complete" type="checkbox">
+							<label class="custom-control-label pointer" for="complete"></label>
+						</div>
+					</td>
+				</tr>
 			{/foreach}
 			</tbody>
 		</table>

@@ -16,21 +16,20 @@ session:
 
 
 database:
-	dsn: 'mysql:host=127.0.0.1;dbname=todolist'
-	user: 'root'
-	password: ''
+	dsn: '%database.driver%:host=%database.host%;dbname=%database.dbname%'
+	user: %database.user%
+	password: %database.password%
 	options:
 		lazy: yes
 
 extensions:
-    console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
-    migrations: Nextras\Migrations\Bridges\NetteDI\MigrationsExtension
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+	migrations: Nextras\Migrations\Bridges\NetteDI\MigrationsExtension
 
 migrations:
-    dir: %appDir%/../migrations # migrations base directory
-    driver: mysql               # pgsql or mysql
-    dbal: nette               # nextras, nette, doctrine or dibi
-
+	dir: %appDir%/../migrations
+	driver: mysql
+	dbal: nette
 
 services:
 	- App\Model\UserManager

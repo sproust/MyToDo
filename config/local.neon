@@ -1,1 +1,7 @@
 parameters:
+	database:
+		host: 127.0.0.1
+		dbname: todolist
+		user: root
+		password:
+		driver: mysql
