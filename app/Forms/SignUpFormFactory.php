@@ -13,7 +13,7 @@ final class SignUpFormFactory
 {
 	use Nette\SmartObject;
 
-	private const PASSWORD_MIN_LENGTH = 7;
+	private const PASSWORD_MIN_LENGTH = 4;
 
 	private FormFactory $factory;
 
@@ -30,18 +30,18 @@ final class SignUpFormFactory
 	public function create(callable $onSuccess): Form
 	{
 		$form = $this->factory->create();
-		$form->addText('username', 'Pick a username:')
+		$form->addText('username')
 			->setRequired('Please pick a username.');
 
-		$form->addEmail('email', 'Your e-mail:')
+		$form->addEmail('email')
 			->setRequired('Please enter your e-mail.');
 
-		$form->addPassword('password', 'Create a password:')
+		$form->addPassword('password')
 			->setOption('description', sprintf('at least %d characters', self::PASSWORD_MIN_LENGTH))
 			->setRequired('Please create a password.')
 			->addRule($form::MIN_LENGTH, null, self::PASSWORD_MIN_LENGTH);
 
-		$form->addSubmit('send', 'Sign up');
+		$form->addSubmit('send');
 
 		$form->onSuccess[] = function (Form $form, \stdClass $values) use ($onSuccess): void {
 			try {

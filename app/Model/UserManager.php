@@ -17,7 +17,7 @@ final class UserManager implements Nette\Security\Authenticator
 
 	private const
 		TABLE_NAME = 'users',
-		COLUMN_ID = 'id',
+		COLUMN_ID = 'ID',
 		COLUMN_NAME = 'username',
 		COLUMN_PASSWORD_HASH = 'password',
 		COLUMN_EMAIL = 'email',
@@ -76,6 +76,7 @@ final class UserManager implements Nette\Security\Authenticator
 				self::COLUMN_NAME => $username,
 				self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
 				self::COLUMN_EMAIL => $email,
+				self::COLUMN_ROLE => "user"
 			]);
 		} catch (Nette\Database\UniqueConstraintViolationException $e) {
 			throw new DuplicateNameException;

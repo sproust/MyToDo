@@ -28,15 +28,15 @@ final class SignInFormFactory
 	public function create(callable $onSuccess): Form
 	{
 		$form = $this->factory->create();
-		$form->addText('username', 'Username:')
+		$form->addText('username')
 			->setRequired('Please enter your username.');
 
-		$form->addPassword('password', 'Password:')
+		$form->addPassword('password')
 			->setRequired('Please enter your password.');
 
-		$form->addCheckbox('remember', 'Keep me signed in');
+		$form->addCheckbox('remember');
 
-		$form->addSubmit('send', 'Sign in');
+		$form->addSubmit('send');
 
 		$form->onSuccess[] = function (Form $form, \stdClass $values) use ($onSuccess): void {
 			try {

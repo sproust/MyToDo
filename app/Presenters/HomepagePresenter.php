@@ -6,7 +6,7 @@ namespace App\Presenters;
 
 use Nette\Database\Explorer;
 
-final class HomepagePresenter extends BasePresenter
+final class HomepagePresenter extends AuthenticatedPresenter
 {
 	private $database;
 
@@ -14,6 +14,7 @@ final class HomepagePresenter extends BasePresenter
 	{
 		$this->database = $database;
 	}
+
 
 	public function renderDefault(): void
 	{

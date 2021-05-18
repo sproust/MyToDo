@@ -1,0 +1,6 @@
+database:
+	dsn: '%database.driver%:host=%database.host%;dbname=%database.dbname%'
+	user: %database.user%
+	password: %database.password%
+	options:
+		lazy: yes

@@ -6,7 +6,7 @@ namespace App\Presenters;
 
 use Nette\Database\Explorer;
 
-final class DonePresenter extends BasePresenter
+final class DonePresenter extends AuthenticatedPresenter
 {
 	private $database;
 
