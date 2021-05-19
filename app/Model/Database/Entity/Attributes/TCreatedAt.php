@@ -3,15 +3,19 @@
 namespace App\Model\Database\Entity\Attributes;
 
 use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 
 trait TCreatedAt
 {
-
-	protected $createdAt;
+	/**
+	 * @var DateTime
+	 * @ORM\Column(type="datetime", nullable=FALSE)
+	 */
+	protected $created_at;
 
 	public function getCreatedAt(): DateTime
 	{
-		return $this->createdAt;
+		return $this->created_at;
 	}
 
 	/**
@@ -22,7 +26,7 @@ trait TCreatedAt
 	 */
 	public function setCreatedAt(): void
 	{
-		$this->createdAt = new DateTime();
+		$this->created_at = new DateTime();
 	}
 
 }

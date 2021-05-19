@@ -2,9 +2,16 @@
 
 namespace App\Model\Database\Entity\Attributes;
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait TId
 {
-
+	/**
+	 * @var int
+	 * @ORM\Column(type="int", nullable=FALSE)
+	 * @ORM\Id
+	 * @ORM\GeneratedValue
+	 */
 	private $id;
 
 	public function getId(): int
