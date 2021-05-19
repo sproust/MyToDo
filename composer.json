@@ -31,7 +31,8 @@
 		"nette/utils": "^3.2",
 		"latte/latte": "^2.9",
 		"tracy/tracy": "^2.8",
-		"contributte/console": "^0.9.1"
+		"contributte/console": "^0.9.1",
+		"nettrine/migrations": "^0.7.1"
 	},
 	"require-dev": {
 		"dg/adminer-custom": "^1.25",
