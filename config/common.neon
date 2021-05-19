@@ -8,3 +8,4 @@ includes:
 
 	#Extension
 	- ext/console.neon
+	- ext/nettrine.neon

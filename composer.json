@@ -32,7 +32,10 @@
 		"latte/latte": "^2.9",
 		"tracy/tracy": "^2.8",
 		"contributte/console": "^0.9.1",
-		"nettrine/migrations": "^0.7.1"
+		"nettrine/migrations": "^0.7.1",
+		"nettrine/orm": "^0.8.1",
+		"nettrine/dbal": "^0.7.0",
+		"nettrine/cache": "^0.3.0"
 	},
 	"require-dev": {
 		"dg/adminer-custom": "^1.25",
