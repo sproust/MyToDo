@@ -23,4 +23,4 @@ nettrine.orm:
         autoGenerateProxyClasses: %debugMode%
 
 nettrine.migrations:
-    directory: %appDir%/migrations
+    directory: %rootDir%/migrations
