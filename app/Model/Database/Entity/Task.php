@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="`tasks`")
  * @ORM\HasLifecycleCallbacks
  */
-class Task extends AbstractEntity
+class Task extends BaseEntity
 {
 
     use TId;

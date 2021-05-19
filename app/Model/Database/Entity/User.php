@@ -14,7 +14,7 @@ use Nette\Security\SimpleIdentity;
  * @ORM\Table(name="`users`")
  * @ORM\HasLifecycleCallbacks
  */
-class User extends AbstractEntity
+class User extends BaseEntity
 {
 
     use TId;

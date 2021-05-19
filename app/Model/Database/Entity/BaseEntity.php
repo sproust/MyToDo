@@ -2,6 +2,6 @@
 
 namespace App\Model\Database\Entity;
 
-abstract class AbstractEntity
+abstract class BaseEntity
 {
 }
