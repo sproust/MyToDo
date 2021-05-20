@@ -11,6 +11,10 @@
                     </div>
                     
                     <form n:name=signUpForm class="user">
+                        <!-- Jednoduché vykreslení chyb -->
+                        <ul class="errors" n:if="$form->hasErrors()">
+                            <li n:foreach="$form->errors as $error">{$error}</li>
+                        </ul>
                         <div class="form-group">
                             <input type="text" class="form-control form-control-user" n:name=username placeholder="Username">
                         </div>

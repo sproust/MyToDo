@@ -52,7 +52,7 @@ class User extends BaseEntity
      */
     private Collection $tasks;
 
-    public function __construct(string $username, string $passwordHash, string $email, string $role, Task $task)
+    public function __construct(string $username, string $passwordHash, string $email, string $role)
     {
         $this->username = $username;
         $this->password = $passwordHash;
