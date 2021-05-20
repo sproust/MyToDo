@@ -22,7 +22,7 @@ class Task extends BaseEntity
 
     /**
      * @var string
-     * @ORM\Column(type="varchar", length=255, nullable=FALSE, unique=false)
+     * @ORM\Column(type="string", length=255, nullable=FALSE, unique=false)
      */
     private $task;
 
@@ -33,23 +33,23 @@ class Task extends BaseEntity
     private $deadline;
 
     /**
-     * @var bool
-     * @ORM\Column(type="tinyint", length=1, nullable=FALSE)
+     * @var boolean
+     * @ORM\Column(type="boolean", length=1, nullable=FALSE)
      */
     private $done;
 
     /**
      * @var int
-     * @ORM\Column(type="int", length=3, nullable=FALSE)
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="tasks")
      */
-    private $user_id;
+    private $user;
 
-    public function __construct(string $task, DateTime $deadline, bool $done, int $user_id)
+    public function __construct(string $task, DateTime $deadline, bool $done, User $user)
     {
         $this->task = $task;
         $this->deadline = $deadline;
         $this->done = $done;
-        $this->user_id = $user_id;
+        $this->user = $user;
     }
 
     public function getTask()
@@ -67,9 +67,9 @@ class Task extends BaseEntity
         return $this->done;
     }
 
-    public function getUserId()
+    public function getUser()
     {
-        return $this->user_id;
+        return $this->user;
     }
 
     public function setTask(string $task)
@@ -87,8 +87,9 @@ class Task extends BaseEntity
         $this->done = $done;
     }
 
-    public function setUserId(int $user_id)
+    public function setUser(User $user)
     {
-        $this->user_id = $user_id;
+        $user->addTask($this);
+        $this->user = $user;
     }
 }

@@ -9,7 +9,7 @@ trait TCreatedAt
 {
 	/**
 	 * @var DateTime
-	 * @ORM\Column(type="datetime", nullable=FALSE)
+	 * @ORM\Column(type="datetime", nullable=FALSE, options={"default": "CURRENT_TIMESTAMP"})
 	 */
 	protected $created_at;
 
@@ -17,16 +17,4 @@ trait TCreatedAt
 	{
 		return $this->created_at;
 	}
-
-	/**
-	 * Doctrine annotation
-	 *
-	 * @ORM\PrePersist
-	 * @internal
-	 */
-	public function setCreatedAt(): void
-	{
-		$this->created_at = new DateTime();
-	}
-
 }

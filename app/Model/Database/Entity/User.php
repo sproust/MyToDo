@@ -5,7 +5,8 @@ namespace App\Model\Database\Entity;
 use App\Model\Database\Entity\Attributes\TCreatedAt;
 use App\Model\Database\Entity\Attributes\TEditedAt;
 use App\Model\Database\Entity\Attributes\TId;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Nette\Security\SimpleIdentity;
 
@@ -23,34 +24,41 @@ class User extends BaseEntity
 
     /**
      * @var string
-     * @ORM\Column(type="varchar", length=30, nullable=FALSE, unique=true)
+     * @ORM\Column(type="string", length=30, nullable=FALSE, unique=true)
      */
     private $username;
 
     /**
      * @var string
-     * @ORM\Column(type="varchar", length=255, nullable=FALSE)
+     * @ORM\Column(type="string", length=255, nullable=FALSE)
      */
     private $password;
 
     /**
      * @var string
-     * @ORM\Column(type="varchar", length=75, nullable=FALSE)
+     * @ORM\Column(type="string", length=75, nullable=FALSE)
      */
     private $email;
 
     /**
      * @var string
-     * @ORM\Column(type="varchar", length=10, nullable=FALSE)
+     * @ORM\Column(type="string", length=10, nullable=FALSE)
      */
     private $role;
 
-    public function __construct(string $username, string $passwordHash, string $email, string $role)
+    /**
+     * @var Task[]|Collection
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="user")
+     */
+    private Collection $tasks;
+
+    public function __construct(string $username, string $passwordHash, string $email, string $role, Task $task)
     {
         $this->username = $username;
         $this->password = $passwordHash;
         $this->email = $email;
         $this->role = $role;
+        $this->tasks = new ArrayCollection();
     }
 
     public function getUsername()
@@ -93,7 +101,13 @@ class User extends BaseEntity
         $this->role = $role;
     }
 
-    public function toSimpleIdentity(): SimpleIdentity{
+    public function addTask($task)
+    {
+        $this->tasks[] = $task;
+    }
+
+    public function toSimpleIdentity(): SimpleIdentity
+    {
         return new SimpleIdentity($this->getId(), [$this->role], [
             "username" => $this->username,
             "email" => $this->email
