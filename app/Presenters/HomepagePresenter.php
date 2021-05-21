@@ -10,7 +10,7 @@ use App\Model\Facade\CreateTaskFacade;
 use DateTime;
 use Exception;
 
-final class HomepagePresenter extends AuthenticatedPresenter
+final class HomepagePresenter extends TaskPresenter
 {
 	/**
 	 * @var AddTaskFormFactory
