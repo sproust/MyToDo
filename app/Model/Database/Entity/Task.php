@@ -22,19 +22,19 @@ class Task extends BaseEntity
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=FALSE, unique=false)
+     * @ORM\Column(name="task", type="string", length=255, nullable=FALSE, unique=false)
      */
     private $task;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime", nullable=FALSE)
+     * @ORM\Column(name="deadline", type="datetime", nullable=FALSE)
      */
     private $deadline;
 
     /**
      * @var boolean
-     * @ORM\Column(type="boolean", length=1, nullable=FALSE)
+     * @ORM\Column(name="done", type="boolean", length=1, nullable=FALSE)
      */
     private $done;
 

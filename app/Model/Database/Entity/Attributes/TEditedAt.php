@@ -9,7 +9,7 @@ trait TEditedAt
 {
     /**
 	 * @var DateTime|NULL
-	 * @ORM\Column(type="datetime", nullable=TRUE)
+	 * @ORM\Column(name="edited_at", type="datetime", nullable=TRUE)
 	 */
 	protected $edited_at;
 
@@ -19,8 +19,6 @@ trait TEditedAt
 	}
 
 	/**
-	 * Doctrine annotation
-	 *
 	 * @ORM\PrePersist
 	 * @internal
 	 */

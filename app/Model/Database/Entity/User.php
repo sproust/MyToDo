@@ -27,25 +27,25 @@ class User extends BaseEntity
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=30, nullable=FALSE, unique=true)
+     * @ORM\Column(name="username", type="string", length=30, nullable=FALSE, unique=true)
      */
     private $username;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=FALSE)
+     * @ORM\Column(name="password", type="string", length=255, nullable=FALSE)
      */
     private $password;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=75, nullable=FALSE)
+     * @ORM\Column(name="email", type="string", length=75, nullable=FALSE)
      */
     private $email;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=10, nullable=FALSE)
+     * @ORM\Column(name="role", type="string", length=10, nullable=FALSE)
      */
     private $role;
 

@@ -8,7 +8,7 @@ trait TId
 {
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer", nullable=FALSE)
+	 * @ORM\Column(name="id", type="integer", nullable=FALSE)
 	 * @ORM\Id
 	 * @ORM\GeneratedValue
 	 */

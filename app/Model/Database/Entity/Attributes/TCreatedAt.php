@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 trait TCreatedAt
 {
 	/**
-	 * @var DateTime|NULL
-	 * @ORM\Column(type="datetime", nullable=TRUE)
+	 * @var DateTime
+	 * @ORM\Column(name="created_at", type="datetime", nullable=FALSE, options={"default": "CURRENT_TIMESTAMP"})
 	 */
 	protected $created_at;
 
@@ -19,8 +19,6 @@ trait TCreatedAt
 	}
 
 	/**
-	 * Doctrine annotation
-	 *
 	 * @ORM\PrePersist
 	 * @internal
 	 */
