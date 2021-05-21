@@ -12,15 +12,10 @@
 			<tbody>
 			{foreach $tasks as $task}
 				<tr>
-					<td>{$task->task}</td>
-					<td>{date_format($task->deadline, "d.m.Y H:i")}</td>
-					<td><i class="fa fa-edit editIcon pointer"></i></td>
-					<td>
-						<div class="custom-control custom-checkbox">
-							<input class="custom-control-input" id="complete" type="checkbox">
-							<label class="custom-control-label pointer" for="complete"></label>
-						</div>
-					</td>
+					<td class="align-middle">{$task->task}</td>
+					<td class="align-middle">{date_format($task->deadline, "d.m.Y H:i")}</td>
+					<td class="align-middle"><i class="fa fa-edit editIcon pointer fa-lg"></i></td>
+					<td class="align-middle"><button type="button" class="btn btn-primary btn-sm">Done</button></td>
 				</tr>
 			{/foreach}
 			</tbody>
