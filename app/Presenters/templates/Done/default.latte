@@ -4,25 +4,28 @@
 	<div class="row">
 		<table class="table table-hover col-7 text-center">
 			<thead>
-				<th>Task</th>
-				<th>Deadline</th>
-				<th>Edit</th>
-				<th>Complete</th>
+				<tr>
+					<th>Task</th>
+					<th>Done in</th>
+					<th>Edit</th>
+					<th>Complete</th>
+				</tr>
 			</thead>
 			<tbody>
-			{foreach $tasks as $task}
-				<tr>
-					<td>{$task->task}</td>
-					<td>Nějaký datum</td>
-					<td><i class="fa fa-edit editIcon pointer"></i></td>
-					<td>
-						<div class="custom-control custom-checkbox">
-							<input class="custom-control-input" id="complete" type="checkbox">
-							<label class="custom-control-label pointer" for="complete"></label>
-						</div>
-					</td>
-				</tr>
-			{/foreach}
+				{if $tasks}
+					{foreach $tasks as $task}
+						<tr>
+							<td class="align-middle">{$task->getTask()}</td>
+							<td class="align-middle">{date_format($task->getEditedAt(), "d.m.Y H:i")}</td>
+							<td class="align-middle"><i class="fa fa-edit editIcon pointer fa-lg"></i></td>
+							<td class="align-middle"><a n:href="Done:undone $task->getId()" type="button" class="btn btn-primary btn-sm">Undone</a></td>
+						</tr>
+					{/foreach}
+				{else}
+					<tr>
+						<td colspan="4">You haven't done any tasks you little piece of shit! Do Something!</td>
+					</tr>
+				{/if}
 			</tbody>
 		</table>
 	</div>

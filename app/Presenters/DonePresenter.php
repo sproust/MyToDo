@@ -4,22 +4,36 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
-use Nette\Database\Explorer;
+use App\Model\Database\EntityManager;
 
 final class DonePresenter extends AuthenticatedPresenter
 {
-	private $database;
 
-	public function __construct(Explorer $database)
-	{
-		$this->database = $database;
-	}
+	/**
+	 * @var EntityManager
+	 * @inject
+	 */
+	public $entityManager;
 
 	public function renderDefault(): void
 	{
-		$tasks = $this->database->table('tasks')->where('done', 1);
+
+		$taskRepository = $this->entityManager->getTaskRepository();
+		$tasks = $taskRepository->getUsersDoneTasks($this->getUser()->getId());
 
 		$this->template->tasks = $tasks;
+	}
 
+	public function actionUndone($taskId) {
+		$taskRepository = $this->entityManager->getTaskRepository();
+		$task = $taskRepository->getTask($taskId);
+
+		$task->setUndone();
+		$task->setEditedAt();
+
+		$this->entityManager->persist($task);
+		$this->entityManager->flush();
+
+		$this->redirect("Done:default");
 	}
 }

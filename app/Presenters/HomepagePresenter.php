@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
-//use Nette\Database\Explorer;
 use App\Forms\AddTaskFormFactory;
 use App\Model\Database\EntityManager;
 use App\Model\Facade\CreateTaskFacade;
@@ -13,8 +12,6 @@ use Exception;
 
 final class HomepagePresenter extends AuthenticatedPresenter
 {
-	//private $database;
-
 	/**
 	 * @var AddTaskFormFactory
 	 * @inject
@@ -33,22 +30,11 @@ final class HomepagePresenter extends AuthenticatedPresenter
 	 */
 	public $createTaskFacade;
 
-	public function __construct(
-		//Explorer $database
-	)
-	{
-		//$this->database = $database;
-	}
-
-
 	public function renderDefault(): void
 	{
 
-		// $tasks = $this->database->table('tasks')->where('done', 0);
-		// $this->template->tasks = $tasks;
-
 		$taskRepository = $this->entityManager->getTaskRepository();
-		$tasks = $taskRepository->getAllUndoneTasks();
+		$tasks = $taskRepository->getUsersUndoneTasks($this->getUser()->getId());
 
 		$this->template->tasks = $tasks;
 	}
@@ -82,5 +68,19 @@ final class HomepagePresenter extends AuthenticatedPresenter
 				return;
 			}
 		}
+	}
+
+	public function actionDone($taskId) {
+
+		$taskRepository = $this->entityManager->getTaskRepository();
+		$task = $taskRepository->getTask($taskId);
+
+		$task->setDone();
+		$task->setEditedAt();
+
+		$this->entityManager->persist($task);
+		$this->entityManager->flush();
+
+		$this->redirect("Homepage:default");
 	}
 }

@@ -22,20 +22,17 @@ class Task extends BaseEntity
     use TCreatedAt;
     use TEditedAt;
 
-
-    //TODO nemá být public!!!
     /**
      * @var string
      * @ORM\Column(name="task", type="string", length=255, nullable=FALSE, unique=false)
      */
-    public $task;
+    private $task;
 
-     //TODO nemá být public!!!
     /**
      * @var DateTime
      * @ORM\Column(name="deadline", type="datetime", nullable=FALSE)
      */
-    public $deadline;
+    private $deadline;
 
     /**
      * @var boolean
@@ -87,9 +84,14 @@ class Task extends BaseEntity
         $this->deadline = $deadline;
     }
 
-    public function setDone(bool $done)
+    public function setDone()
     {
-        $this->done = $done;
+        $this->done = 1;
+    }
+
+    public function setUndone()
+    {
+        $this->done = 0;
     }
 
     public function setUser(User $user)

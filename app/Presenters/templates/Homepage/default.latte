@@ -4,20 +4,28 @@
 	<div class="row">
 		<table class="table table-hover col-7 text-center">
 			<thead>
-				<th>Task</th>
-				<th>Deadline</th>
-				<th>Edit</th>
-				<th>Complete</th>
+				<tr>
+					<th>Task</th>
+					<th>Deadline</th>
+					<th>Edit</th>
+					<th>Complete</th>
+				</tr>
 			</thead>
 			<tbody>
-			{foreach $tasks as $task}
-				<tr>
-					<td class="align-middle">{$task->task}</td>
-					<td class="align-middle">{date_format($task->deadline, "d.m.Y H:i")}</td>
-					<td class="align-middle"><i class="fa fa-edit editIcon pointer fa-lg"></i></td>
-					<td class="align-middle"><button type="button" class="btn btn-primary btn-sm">Done</button></td>
-				</tr>
-			{/foreach}
+				{if $tasks}
+					{foreach $tasks as $task}
+						<tr>
+							<td class="align-middle">{$task->getTask()}</td>
+							<td class="align-middle">{date_format($task->getDeadline(), "d.m.Y H:i")}</td>
+							<td class="align-middle"><i class="fa fa-edit editIcon pointer fa-lg"></i></td>
+							<td class="align-middle"><a n:href="Homepage:done $task->getId()" type="button" class="btn btn-primary btn-sm">Done</a></td>
+						</tr>
+					{/foreach}
+				{else}
+					<tr>
+						<td colspan="4">You have no tasks to be done Mr. Mustdoeverything</td>
+					</tr>
+				{/if}
 			</tbody>
 		</table>
 
