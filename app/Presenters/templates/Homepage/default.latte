@@ -13,7 +13,7 @@
 			{foreach $tasks as $task}
 				<tr>
 					<td>{$task->task}</td>
-					<td>Nějaký datum</td>
+					<td>{date_format($task->deadline, "d.m.Y H:i")}</td>
 					<td><i class="fa fa-edit editIcon pointer"></i></td>
 					<td>
 						<div class="custom-control custom-checkbox">
@@ -25,7 +25,45 @@
 			{/foreach}
 			</tbody>
 		</table>
+
+		<button class="btn btn-primary ml-5" data-toggle="modal" data-target="#addTaskModal" style="height: 50px;">Add task</button>
 	</div>
+
+	<!-- Add task Modal-->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Entry task</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+				<form n:name=addTaskForm>
+					<div class="modal-body">
+						
+							<!-- Jednoduché vykreslení chyb -->
+							<ul class="errors" n:if="$form->hasErrors()">
+								<li n:foreach="$form->errors as $error">{$error}</li>
+							</ul>
+							{* Formulář *}
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Enter Task" n:name=task>
+							</div>
+							<div class="form-group">
+								<input type="datetime-local" class="form-control" placeholder="Deadline" n:name=deadline>
+							</div>
+						
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+						<button class="btn btn-primary" type="submit">Add</button>
+					</div>
+				</form>
+            </div>
+        </div>
+    </div>
 
 {/block}
 

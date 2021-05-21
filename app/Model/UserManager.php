@@ -41,7 +41,7 @@ final class UserManager implements Nette\Security\Authenticator
 	{
 
 		$userRepository = $this->entityManager->getUserRepository();
-		$user = $userRepository->getUser($username);
+		$user = $userRepository->getUserByName($username);
 
 		if (!$user) {
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);

@@ -16,21 +16,26 @@ use Doctrine\ORM\Mapping as ORM;
 class Task extends BaseEntity
 {
 
+    public const TASK_STATUS = 0;
+
     use TId;
     use TCreatedAt;
     use TEditedAt;
 
+
+    //TODO nemá být public!!!
     /**
      * @var string
      * @ORM\Column(name="task", type="string", length=255, nullable=FALSE, unique=false)
      */
-    private $task;
+    public $task;
 
+     //TODO nemá být public!!!
     /**
      * @var DateTime
      * @ORM\Column(name="deadline", type="datetime", nullable=FALSE)
      */
-    private $deadline;
+    public $deadline;
 
     /**
      * @var boolean
@@ -44,11 +49,11 @@ class Task extends BaseEntity
      */
     private $user;
 
-    public function __construct(string $task, DateTime $deadline, bool $done, User $user)
+    public function __construct(string $task, DateTime $deadline, User $user)
     {
         $this->task = $task;
         $this->deadline = $deadline;
-        $this->done = $done;
+        $this->done = self::TASK_STATUS;
         $this->user = $user;
     }
 

@@ -7,11 +7,17 @@ use App\Model\Database\Entity\User;
 class UserRepository extends BaseRepository
 {
 
-    public function getUser($username): User
+    public function getUserByName($username): User
     {
         
         return $this->findOneBy(["username" => $username]);
 
+    }
+
+    public function getUserById($id): User
+    {
         
+        return $this->findOneBy(["id" => $id]);
+
     }
 }
