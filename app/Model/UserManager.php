@@ -6,8 +6,8 @@ namespace App\Model;
 
 use Nette;
 use Nette\Security\Passwords;
-use App\Model\Database\Entity\User;
 use App\Model\Facade\CreateUserFacade;
+use App\Model\Database\EntityManager;
 
 /**
  * Users management.
@@ -16,27 +16,20 @@ final class UserManager implements Nette\Security\Authenticator
 {
 	use Nette\SmartObject;
 
-	private const
-		TABLE_NAME = 'users',
-		COLUMN_ID = 'id',
-		COLUMN_NAME = 'username',
-		COLUMN_PASSWORD_HASH = 'password',
-		COLUMN_EMAIL = 'email',
-		COLUMN_ROLE = 'role';
-
-
-	private Nette\Database\Explorer $database;
-
 	private CreateUserFacade $createUserFacade;
 
 	private Passwords $passwords;
 
+	private EntityManager $entityManager;
 
-	public function __construct(Nette\Database\Explorer $database, CreateUserFacade $createUserFacade, Passwords $passwords)
-	{
-		$this->database = $database;
+	public function __construct(
+		CreateUserFacade $createUserFacade,
+		Passwords $passwords,
+		EntityManager $entityManager
+	) {
 		$this->createUserFacade = $createUserFacade;
 		$this->passwords = $passwords;
+		$this->entityManager = $entityManager;
 	}
 
 
@@ -47,26 +40,18 @@ final class UserManager implements Nette\Security\Authenticator
 	public function authenticate(string $username, string $password): Nette\Security\SimpleIdentity
 	{
 
-		//TODO: upravit na ORM
-		$row = $this->database->table(self::TABLE_NAME)
-			->where(self::COLUMN_NAME, $username)
-			->fetch();
+		$userRepository = $this->entityManager->getUserRepository();
+		$user = $userRepository->getUser($username);
 
-		if (!$row) {
+		if (!$user) {
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
-
-		} elseif (!$this->passwords->verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
+		} elseif (!$this->passwords->verify($password, $user->getPasswordHash())) {
 			throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
-
-		} elseif ($this->passwords->needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
-			$row->update([
-				self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
-			]);
+		} elseif ($this->passwords->needsRehash($user->getPasswordHash())) {
+			$user->changePasswordHash($this->passwords->hash($password));
 		}
 
-		$arr = $row->toArray();
-		unset($arr[self::COLUMN_PASSWORD_HASH]);
-		return new Nette\Security\SimpleIdentity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
+		return $user->toSimpleIdentity();
 	}
 
 
@@ -78,14 +63,7 @@ final class UserManager implements Nette\Security\Authenticator
 	{
 		Nette\Utils\Validators::assert($email, 'email');
 		try {
-			// $this->database->table(self::TABLE_NAME)->insert([
-			// 	self::COLUMN_NAME => $username,
-			// 	self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
-			// 	self::COLUMN_EMAIL => $email,
-			// 	self::COLUMN_ROLE => "user"
-			// ]);
-			$this->createUserFacade->createUser(["username" => $username, "email" => $email, "password" => $password, "role" => "user"]);
-
+			$this->createUserFacade->createUser(["username" => $username, "email" => $email, "password" => $password]);
 		} catch (Nette\Database\UniqueConstraintViolationException $e) {
 			throw new DuplicateNameException;
 		}

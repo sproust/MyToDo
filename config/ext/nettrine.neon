@@ -35,6 +35,7 @@ nettrine.orm.annotations:
         App\Model\Database\Entity: %appDir%/Model/Database/Entity
 
 nettrine.orm:
+    entityManagerDecoratorClass: App\Model\Database\EntityManager
     configuration:
         autoGenerateProxyClasses: %debugMode%
 

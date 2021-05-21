@@ -8,12 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 trait TCreatedAt
 {
 	/**
-	 * @var DateTime
-	 * @ORM\Column(type="datetime", nullable=FALSE)
+	 * @var DateTime|NULL
+	 * @ORM\Column(type="datetime", nullable=TRUE)
 	 */
 	protected $created_at;
 
-	public function getCreatedAt(): DateTime
+	public function getCreatedAt(): ?DateTime
 	{
 		return $this->created_at;
 	}

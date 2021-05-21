@@ -3,7 +3,7 @@
 namespace App\Model\Facade;
 
 use App\Model\Database\Entity\User;
-use Nettrine\ORM\EntityManagerDecorator as EntityManager;
+use App\Model\Database\EntityManager;
 use Nette\Security\Passwords;
 
 class CreateUserFacade
@@ -32,8 +32,7 @@ class CreateUserFacade
         $user = new User(
             $data['username'],
             $this->passwords->hash($data['password']),
-            $data['email'],
-            $data['role']
+            $data['email']
         );
 
         // Save user

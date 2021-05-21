@@ -8,26 +8,26 @@ class TaskRepository extends BaseRepository
 {
     public function getAllUndoneTasks()
     {
-        $this->findBy(["done" => 0]);
+        return $this->findBy(["done" => 0]);
     }
 
     public function getAllDoneTasks()
     {
-        $this->findBy(["done" => 1]);
+        return $this->findBy(["done" => 1]);
     }
 
-    public function getTask($taskId)
+    public function getTask($taskId): Task
     {
-        $this->findOneBy(["id" => $taskId]);
+        return $this->findOneBy(["id" => $taskId]);
     }
 
     public function getUsersUndoneTasks($userId)
     {
-        $this->findBy(["done" => 0, "user_id" => $userId]);
+        return $this->findBy(["done" => 0, "user_id" => $userId]);
     }
 
     public function getUsersDoneTasks($userId)
     {
-        $this->findBy(["done" => 1, "user_id" => $userId]);
+        return $this->findBy(["done" => 1, "user_id" => $userId]);
     }
 }

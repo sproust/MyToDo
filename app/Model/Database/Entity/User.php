@@ -18,6 +18,9 @@ use Nette\Security\SimpleIdentity;
 class User extends BaseEntity
 {
 
+    public const ROLE_ADMIN = 'admin';
+	public const ROLE_USER = 'user';
+
     use TId;
     use TCreatedAt;
     use TEditedAt;
@@ -52,12 +55,12 @@ class User extends BaseEntity
      */
     private Collection $tasks;
 
-    public function __construct(string $username, string $passwordHash, string $email, string $role)
+    public function __construct(string $username, string $passwordHash, string $email)
     {
         $this->username = $username;
         $this->password = $passwordHash;
         $this->email = $email;
-        $this->role = $role;
+        $this->role = self::ROLE_USER;
         $this->tasks = new ArrayCollection();
     }
 
