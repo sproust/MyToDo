@@ -1,5 +1,12 @@
 # MyToDo
-## Instalation
+
+## Requirements
+
+- Docker
+- Docker Compose
+- unix core (Makefile, sh, etc.)
+
+## Installation
 
 1. Clone this repository
 
@@ -9,15 +16,17 @@ git clone https://github.com/sproust/MyToDo.git
 
 2. Make dirctories "temp/" and "log" (writable)
  
-3. Download libraries via composer
+3. Start up development environment
 
 ```bash
-composer install
+make up
 ```
 
-4. Create database 
+- [App](http://localhost/)
+- [phpMyAdmin](http://localhost:10000/)
 
+4. Init project
 
 ```bash
-bin/console migrations:migrate
+make init
 ```

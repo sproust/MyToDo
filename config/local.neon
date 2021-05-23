@@ -1,6 +1,6 @@
 parameters:
 	database:
-		host: 127.0.0.1
+		host: db
 		dbname: todolist
 		user: root
 		password: root

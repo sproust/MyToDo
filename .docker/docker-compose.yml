@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+
+  db:
+    container_name: Database
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=todolist
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./data/db/:/var/lib/mysql:delegated
+
+  php:
+    container_name: PHP
+    build:
+      context: ./..
+      dockerfile: ./.docker/php/dev/Dockerfile
+    working_dir: /srv
+    volumes:
+      - ./../:/srv:delegated
+
+  nginx:
+    container_name: Nginx
+    build:
+      context: ./../
+      dockerfile: ./.docker/nginx/Dockerfile
+    environment:
+      - NGINX_PHP_HOST=php
+    ports:
+      - 80:80
+
+  phpmyadmin:
+    container_name: phpMyAdmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    ports:
+      - 10000:80

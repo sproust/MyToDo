@@ -26,3 +26,6 @@ composer.phar
 # Ignore all local history of files
 .history
 .ionide
+
+### Docker Dev Data
+.docker/data

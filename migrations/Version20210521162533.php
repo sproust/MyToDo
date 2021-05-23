@@ -20,10 +20,6 @@ final class Version20210521162533 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->addSql('CREATE DATABASE IF NOT EXISTS `todolist` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci');
-        $this->addSql("CREATE TABLE `doctrine_migrations` (
-            `version` varchar(14) COLLATE utf8_unicode_ci NOT NULL,
-            `executed_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)'
-          ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
         $this->addSql("CREATE TABLE `tasks` (
             `id` int(11) NOT NULL,
             `user_id` int(11) DEFAULT NULL,
@@ -51,10 +47,8 @@ final class Version20210521162533 extends AbstractMigration
             `edited_at` datetime DEFAULT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
         $this->addSql("INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `created_at`, `edited_at`) VALUES
-        (1, 'admin', '$2y$10$Ykyjd3SRQS0bQqz2EGqaBu90e9XDQn6kAK1L5M/vq6BTgS19sQy9K', 'admin@admin.cz', 'admin', '2021-05-21 17:02:41', '2021-05-21 17:02:41'),
-        (2, 'user', '$2y$10$cvcDgEYARpgiT.Ijfs9m/.NKcmvq6gYwPojjXwdl1srOHZYRbszgu', 'user@user.cz', 'user', '2021-05-21 17:58:49', '2021-05-21 17:58:49')");
-        $this->addSql("ALTER TABLE `doctrine_migrations`
-        ADD PRIMARY KEY (`version`)");
+        (1, 'admin', '$2y$10\$Ykyjd3SRQS0bQqz2EGqaBu90e9XDQn6kAK1L5M/vq6BTgS19sQy9K', 'admin@admin.cz', 'admin', '2021-05-21 17:02:41', '2021-05-21 17:02:41'),
+        (2, 'user', '$2y$10\$cvcDgEYARpgiT.Ijfs9m/.NKcmvq6gYwPojjXwdl1srOHZYRbszgu', 'user@user.cz', 'user', '2021-05-21 17:58:49', '2021-05-21 17:58:49')");
         $this->addSql("ALTER TABLE `tasks`
         ADD PRIMARY KEY (`id`),
         ADD KEY `IDX_50586597A76ED395` (`user_id`)");
@@ -66,8 +60,7 @@ final class Version20210521162533 extends AbstractMigration
         $this->addSql("ALTER TABLE `users`
         MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3");
         $this->addSql("ALTER TABLE `tasks`
-        ADD CONSTRAINT `FK_50586597A76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-      COMMIT");
+        ADD CONSTRAINT `FK_50586597A76ED395` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);");
     }
 
     public function down(Schema $schema): void

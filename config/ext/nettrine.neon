@@ -24,7 +24,7 @@ nettrine.dbal:
         panel: %debugMode%
         sourcePaths: [%appDir%]
     connection:
-        host: localhost
+        host: db
         driver: mysqli
         dbname: todolist
         user: root
