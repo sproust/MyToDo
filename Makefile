@@ -20,6 +20,8 @@ exec\:php:
 	docker-compose -f .docker/docker-compose.yml exec php sh;
 
 init:
+	mkdir -m 777 temp
+	mkdir -m 777 log
 	docker-compose -f .docker/docker-compose.yml exec php composer install
 	docker-compose -f .docker/docker-compose.yml exec php bin/console orm:generate-proxies
 	docker-compose -f .docker/docker-compose.yml exec php bin/console migrations:migrate --no-interaction
