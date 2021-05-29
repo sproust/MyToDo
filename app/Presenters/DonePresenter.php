@@ -6,7 +6,7 @@ namespace App\Presenters;
 
 use App\Model\Database\EntityManager;
 
-final class DonePresenter extends AuthenticatedPresenter
+final class DonePresenter extends TaskPresenter
 {
 
 	/**
@@ -25,6 +25,7 @@ final class DonePresenter extends AuthenticatedPresenter
 	}
 
 	public function actionUndone($taskId) {
+		
 		$taskRepository = $this->entityManager->getTaskRepository();
 		$task = $taskRepository->getTask($taskId);
 
