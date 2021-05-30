@@ -28,6 +28,8 @@ services:
       - NGINX_PHP_HOST=php
     ports:
       - 80:80
+    volumes:
+      - ./../www:/srv/www
 
   phpmyadmin:
     container_name: phpMyAdmin

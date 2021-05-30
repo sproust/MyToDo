@@ -9,9 +9,9 @@ function editTask(taskText, taskId) {
     var urlParts = url.split("/");
 
     if (urlParts[urlParts.length - 2] == "done") {
-        redirect = "done";
+        redirect = "Done";
     } else {
-        redirect = "homepage";
+        redirect = "Homepage";
     }
 
 
@@ -41,7 +41,7 @@ function editTask(taskText, taskId) {
 
         icon.className = "fa fa-edit editIcon pointer fa-lg";
 
-        location.href = "/mytodo/www/" + redirect + "/edit?taskId=" + taskId + "&taskText=" + newValue + "&redirection=" + redirect;
+        location.href = "/task/edit?taskId=" + taskId + "&taskText=" + newValue + "&redirection=" + redirect;
     }
 
 }
