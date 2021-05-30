@@ -5,6 +5,8 @@ namespace App\Presenters;
 use App\Model\Database\EntityManager;
 use App\Forms\EditTaskFormFactory;
 use DateTime;
+use Exception;
+use Nette\Http\Request;
 
 class TaskPresenter extends AuthenticatedPresenter
 {
@@ -46,9 +48,17 @@ class TaskPresenter extends AuthenticatedPresenter
                 $this->entityManager->persist($task);
                 $this->entityManager->flush();
 
+                $httpRequest = $this->getHttpRequest();
+                $url = $httpRequest->getUrl();
+                $urlArray = explode("/", $url);
                 
+                if($urlArray[1] == "done") {
+                    $presenter = "Done";
+                } else {
+                    $presenter = "Homepage";
+                }
 
-                $this->redirect("Homepage:default");
+                $this->redirect($presenter . ":default");
 			} catch (Exception $e) {
 				$form->addError("Couldn't edit task.");
 				return;
