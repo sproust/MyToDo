@@ -6,7 +6,6 @@ use App\Model\Database\EntityManager;
 use App\Forms\EditTaskFormFactory;
 use DateTime;
 use Exception;
-use Nette\Http\Request;
 
 class TaskPresenter extends AuthenticatedPresenter
 {
@@ -52,8 +51,8 @@ class TaskPresenter extends AuthenticatedPresenter
                 $url = $httpRequest->getUrl();
                 $urlArray = explode("/", $url);
                 
-                if($urlArray[1] == "done") {
-                    $presenter = "Done";
+                if($urlArray[1] != "") {
+                    $presenter = ucfirst($urlArray[1]);
                 } else {
                     $presenter = "Homepage";
                 }
