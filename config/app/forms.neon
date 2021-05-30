@@ -4,3 +4,4 @@ services:
 	- App\Forms\SignInFormFactory
 	- App\Forms\SignUpFormFactory
 	- App\Forms\AddTaskFormFactory
+	- App\Forms\EditTaskFormFactory

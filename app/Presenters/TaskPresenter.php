@@ -3,6 +3,8 @@
 namespace App\Presenters;
 
 use App\Model\Database\EntityManager;
+use App\Forms\EditTaskFormFactory;
+use DateTime;
 
 class TaskPresenter extends AuthenticatedPresenter
 {
@@ -13,18 +15,44 @@ class TaskPresenter extends AuthenticatedPresenter
      */
     public $entityManager;
 
-    public function actionEdit($taskId, $taskText, $redirection): void
-    {
+    /**
+     * @var EditTaskFormFactory
+     * @inject
+     */
+    public $editTaskFormFactory;
 
-        $taskRepository = $this->entityManager->getTaskRepository();
-        $task = $taskRepository->getTask($taskId);
+    public function createComponentEditTaskForm() {
+        $form = $this->editTaskFormFactory->create();
 
-        $task->setTask($taskText);
-        $task->setEditedAt();
+        $form->onSuccess[] = [$this, "editTaskSuccess"];
 
-        $this->entityManager->persist($task);
-		$this->entityManager->flush();
-
-        $this->redirect("$redirection:default");
+		return $form;
     }
+
+    public function editTaskSuccess($form, $values)
+	{
+		if (isset($form)) {
+
+			$taskRepository = $this->entityManager->getTaskRepository();
+            $task = $taskRepository->getTask($values->id);
+
+            $deadline = new DateTime($values->deadline);
+
+			try {
+				$task->setTask($values->task);
+                $task->setDeadline($deadline);
+                $task->setEditedAt();
+
+                $this->entityManager->persist($task);
+                $this->entityManager->flush();
+
+                
+
+                $this->redirect("Homepage:default");
+			} catch (Exception $e) {
+				$form->addError("Couldn't edit task.");
+				return;
+			}
+		}
+	}
 }

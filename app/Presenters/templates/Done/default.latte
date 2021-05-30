@@ -1,11 +1,14 @@
 
 {block content}
 	
+	<h3 n:block=title>Done</h3>
+
 	<div class="row">
-		<table class="table table-hover col-7 text-center">
+		<table class="table table-hover col-xl-8 col-lg-12 text-center">
 			<thead>
 				<tr>
 					<th style="width: 400px;">Task</th>
+					<th style="width: 250px;">Deadline</th>
 					<th>Done in</th>
 					<th>Edit</th>
 					<th>Complete</th>
@@ -15,12 +18,19 @@
 				{if $tasks}
 					{foreach $tasks as $task}
 						<tr>
-							<td class="align-middle" id="task{$task->getId()}">{$task->getTask()}</td>
-							<td class="align-middle">{date_format($task->getEditedAt(), "d.m.Y H:i")}</td>
-							<td class="align-middle" id="tdIcon{$task->getId()}"><i class="fa fa-edit editIcon pointer fa-lg" 
-														onclick="editTask({$task->getTask()}, {$task->getId()})"
-														id="icon{$task->getId()}"></i>
-							</td>
+							{* <form method="post" n:name="editTaskForm"> *}
+								<td class="align-middle" id="task{$task->getId()}">{$task->getTask()}</td>
+								<td class="align-middle" id="deadline{$task->getId()}">{date_format($task->getDeadline(), "d.m.Y H:i")}</td>
+								<td class="align-middle">{date_format($task->getEditedAt(), "d.m.Y H:i")}</td>
+								<td class="align-middle">
+									{* <button type="submit" class="submitIcon"> *}
+										<i class="fa fa-edit editIcon pointer fa-lg" 
+										onclick="return editTask({$task->getTask()}, {date_format($task->getDeadline(), 'Y-m-d H:i')}, {$task->getId()})" 
+										id="icon{$task->getId()}"></i>
+									{* </button> *}
+								</td>
+							{* </form> *}
+
 							<td class="align-middle"><a n:href="Done:undone $task->getId()" type="button" class="btn btn-primary btn-sm">Undone</a></td>
 						</tr>
 					{/foreach}
