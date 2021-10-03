@@ -3,6 +3,7 @@ services:
 
   db:
     container_name: Database
+    platform: linux/x86_64
     image: mysql
     environment:
       - MYSQL_DATABASE=todolist
