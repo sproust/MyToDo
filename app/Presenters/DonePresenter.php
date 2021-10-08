@@ -24,17 +24,19 @@ final class DonePresenter extends TaskPresenter
 		$this->template->tasks = $tasks;
 	}
 
-	public function actionUndone($taskId) {
-		
-		$taskRepository = $this->entityManager->getTaskRepository();
-		$task = $taskRepository->getTask($taskId);
-
-		$task->setUndone();
-		$task->setEditedAt();
-
-		$this->entityManager->persist($task);
-		$this->entityManager->flush();
-
-		$this->redirect("Done:default");
+	public function handleUndone($taskId)
+	{
+		if ($this->isAjax()) {
+			$taskRepository = $this->entityManager->getTaskRepository();
+			$task = $taskRepository->getTask($taskId);
+	
+			$task->setUndone();
+			$task->setEditedAt();
+	
+			$this->entityManager->persist($task);
+			$this->entityManager->flush();
+	
+			$this->redrawControl("tasks");
+		}
 	}
 }

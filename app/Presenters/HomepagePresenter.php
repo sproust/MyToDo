@@ -32,7 +32,6 @@ final class HomepagePresenter extends TaskPresenter
 
 	public function renderDefault(): void
 	{
-
 		$taskRepository = $this->entityManager->getTaskRepository();
 		$tasks = $taskRepository->getUsersUndoneTasks($this->getUser()->getId());
 
@@ -70,17 +69,19 @@ final class HomepagePresenter extends TaskPresenter
 		}
 	}
 
-	public function actionDone($taskId) {
-
-		$taskRepository = $this->entityManager->getTaskRepository();
-		$task = $taskRepository->getTask($taskId);
-
-		$task->setDone();
-		$task->setEditedAt();
-
-		$this->entityManager->persist($task);
-		$this->entityManager->flush();
-
-		$this->redirect("Homepage:default");
+	public function handleDone($taskId)
+	{
+		if ($this->isAjax()) {
+			$taskRepository = $this->entityManager->getTaskRepository();
+			$task = $taskRepository->getTask($taskId);
+	
+			$task->setDone();
+			$task->setEditedAt();
+	
+			$this->entityManager->persist($task);
+			$this->entityManager->flush();
+	
+			$this->redrawControl("tasks");
+		}
 	}
 }

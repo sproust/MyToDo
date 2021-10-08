@@ -4,53 +4,55 @@
 	<h3 n:block=title>Done</h3>
 
 	<div class="row">
-		<table class="table table-hover col-xl-8 col-lg-12 text-center">
-			<thead>
-				<tr>
-					<th style="width: 400px;">Task</th>
-					<th style="width: 250px;">Deadline</th>
-					<th>Done in</th>
-					<th>Edit</th>
-					<th>Complete</th>
-				</tr>
-			</thead>
-			<tbody>
-				{if $tasks}
-					{foreach $tasks as $task}
-						<form method="post" n:name="editTaskForm" id="form{$task->getId()}">
-							<tr>
-								<td class="align-middle" id="task{$task->getId()}">
-									<input type="text" n:name=id value="{$task->getId()}" style="display: none;">
-									<div id="taskDiv{$task->getId()}">{$task->getTask()}</div>
-									<input type="text" class="form-control" placeholder="Enter Task" n:name=task 
-									style="display: none;" value="{$task->getTask()}" id="taskInput{$task->getId()}">
-								</td>
-								<td class="align-middle" id="deadline{$task->getId()}">
-									<div id="deadlineDiv{$task->getId()}">{date_format($task->getDeadline(), "d.m.Y H:i")}</div>
-									<input type="datetime-local" class="form-control" placeholder="Deadline" n:name=deadline 
-									style="display: none;" value="{str_replace(' ', 'T', date_format($task->getDeadline(), 'Y-m-d H:i'))}" id="deadlineInput{$task->getId()}">
-								</td>
-								<td class="align-middle">{date_format($task->getEditedAt(), "d.m.Y H:i")}</td>
-								<td class="align-middle">
-									<i class="fa fa-edit editIcon pointer fa-lg" 
-									onclick="editTask({$task->getId()})" 
-									id="icon{$task->getId()}"></i>
-									<button type="submit" class="submitIcon" style="display: none;" id="submitIcon{$task->getId()}">
-										<i class="fa fa-check-square editIcon pointer fa-lg"></i>
-									</button>
-								</td>							
-								
-								<td class="align-middle"><a n:href="Homepage:done $task->getId()" type="button" class="btn btn-primary btn-sm">Done</a></td>
-							</tr>
-						</form>
-					{/foreach}
-				{else}
+		<div n:snippet="tasks">
+			<table class="table table-hover col-xl-10 col-lg-12 text-center text-nowrap">
+				<thead>
 					<tr>
-						<td colspan="4">You haven't done any tasks you little piece of shit! Do Something!</td>
+						<th style="width: 400px;">Task</th>
+						<th style="width: 250px;">Deadline</th>
+						<th>Done in</th>
+						<th>Edit</th>
+						<th>Complete</th>
 					</tr>
-				{/if}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{if $tasks}
+						{foreach $tasks as $task}
+							<form method="post" n:name="editTaskForm" id="form{$task->getId()}">
+								<tr>
+									<td class="align-middle" id="task{$task->getId()}">
+										<input type="text" n:name=id value="{$task->getId()}" style="display: none;">
+										<div id="taskDiv{$task->getId()}">{$task->getTask()}</div>
+										<input type="text" class="form-control" placeholder="Enter Task" n:name=task 
+										style="display: none;" value="{$task->getTask()}" id="taskInput{$task->getId()}">
+									</td>
+									<td class="align-middle" id="deadline{$task->getId()}">
+										<div id="deadlineDiv{$task->getId()}">{date_format($task->getDeadline(), "d.m.Y H:i")}</div>
+										<input type="datetime-local" class="form-control" placeholder="Deadline" n:name=deadline 
+										style="display: none;" value="{str_replace(' ', 'T', date_format($task->getDeadline(), 'Y-m-d H:i'))}" id="deadlineInput{$task->getId()}">
+									</td>
+									<td class="align-middle">{date_format($task->getEditedAt(), "d.m.Y H:i")}</td>
+									<td class="align-middle">
+										<i class="fa fa-edit editIcon pointer fa-lg" 
+										onclick="editTask({$task->getId()})" 
+										id="icon{$task->getId()}"></i>
+										<button type="submit" class="submitIcon" style="display: none;" id="submitIcon{$task->getId()}">
+											<i class="fa fa-check-square editIcon pointer fa-lg"></i>
+										</button>
+									</td>							
+									
+									<td class="align-middle"><a n:href="undone! $task->getId()" type="button" class="btn btn-primary btn-sm ajax">Undone</a></td>
+								</tr>
+							</form>
+						{/foreach}
+					{else}
+						<tr>
+							<td colspan="4">You haven't done any tasks you little piece of shit! Do Something!</td>
+						</tr>
+					{/if}
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 {/block}
