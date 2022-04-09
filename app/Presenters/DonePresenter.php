@@ -18,7 +18,14 @@ final class DonePresenter extends TaskPresenter
 	public function renderDefault(): void
 	{
 		$taskRepository = $this->entityManager->getTaskRepository();
-		$tasks = $taskRepository->getUsersDoneTasks($this->getUser()->getId());
+
+		if ($this->user->isInRole("admin")) {
+			$tasks = $taskRepository->getAllDoneTasks();
+
+			$this->template->users = $this->getUsers();
+		} else {
+			$tasks = $taskRepository->getUsersDoneTasks($this->getUser()->getId());
+		}
 
 		$this->template->tasks = $tasks;
 	}
@@ -28,13 +35,13 @@ final class DonePresenter extends TaskPresenter
 		if ($this->isAjax()) {
 			$taskRepository = $this->entityManager->getTaskRepository();
 			$task = $taskRepository->getTask($taskId);
-	
+
 			$task->setUndone();
 			$task->setEditedAt();
-	
+
 			$this->entityManager->persist($task);
 			$this->entityManager->flush();
-	
+
 			$this->redrawControl("tasks");
 		}
 	}

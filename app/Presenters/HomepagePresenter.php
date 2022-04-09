@@ -33,9 +33,17 @@ final class HomepagePresenter extends TaskPresenter
 	public function renderDefault(): void
 	{
 		$taskRepository = $this->entityManager->getTaskRepository();
-		$tasks = $taskRepository->getUsersUndoneTasks($this->getUser()->getId());
+
+		if ($this->user->isInRole("admin")) {
+			$tasks = $taskRepository->getAllUndoneTasks();
+
+			$this->template->users = $this->getUsers();
+		} else {
+			$tasks = $taskRepository->getUsersUndoneTasks($this->getUser()->getId());
+		}
 
 		$this->template->tasks = $tasks;
+
 	}
 
 	public function createComponentAddTaskForm()

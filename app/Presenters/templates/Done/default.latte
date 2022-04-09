@@ -15,6 +15,9 @@
 					<table class="table table-hover text-center text-nowrap">
 						<thead>
 							<tr>
+								{if $user->isInRole("admin")}
+									<td>User</td>
+								{/if}
 								<th style="width: 400px;">Task</th>
 								<th style="width: 250px;">Deadline</th>
 								<th>Done in</th>
@@ -26,6 +29,9 @@
 							{if $tasks}
 								{foreach $tasks as $task}
 										<tr>
+											{if $user->isInRole("admin")}
+												<td>{$task->getUser()->getUsername()}</td>
+											{/if}
 											<td class="align-middle" id="task{$task->getId()}">
 												<div id="taskDiv{$task->getId()}">{$task->getTask()}</div>
 												<input type="text" class="form-control d-none" placeholder="Enter Task" value="{$task->getTask()}" id="taskInput{$task->getId()}">
@@ -53,14 +59,27 @@
 				</div>
 			</div>
 		</div>
+
+		{if $user->isInRole("admin")}
+			<div class="col-xl-2">
+				<label for="userId">Select user</label>
+				<select class="form-control" id="userSelect">
+					<option value="all">All</option>
+					{foreach $users as $userEntity}
+						<option value="{$userEntity->getUsername()}">{$userEntity->getUsername()}</option>
+					{/foreach}
+				</select>
+			</div>
+		{/if}
 	</div>
 {/block}
 
 {block scripts}
 
-	<script src="{$basePath}/js/editTask.js"></script>
-
 	{include parent}
+
+	<script src="{$basePath}/js/editTask.js"></script>
+	<script src="{$basePath}/js/filterTable.js"></script>
 
 {/block}
 

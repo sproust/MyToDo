@@ -1,5 +1,5 @@
 {block content}
-	<div calss="row">
+	<div class="row">
 
 		<div class="col-xl-7">
 
@@ -13,10 +13,13 @@
 			</div>
 
 			<div class="row mt-3">
-				<div n:snippet="tasks">
-					<table class="table table-hover text-center text-nowrap">
+				<div class="col" n:snippet="tasks">
+					<table class="table table-hover text-center text-nowrap" id="tasksTable">
 						<thead>
 							<tr>
+								{if $user->isInRole("admin")}
+									<td>User</td>
+								{/if}
 								<th style="width: 400px;">Task</th>
 								<th style="width: 250px;">Deadline</th>
 								<th>Edit</th>
@@ -27,6 +30,9 @@
 							{if $tasks}
 								{foreach $tasks as $task}
 									<tr>
+										{if $user->isInRole("admin")}
+											<td>{$task->getUser()->getUsername()}</td>
+										{/if}
 										<td class="align-middle" id="task{$task->getId()}">
 											<div id="taskDiv{$task->getId()}">{$task->getTask()}</div>
 											<input type="text" class="form-control d-none" placeholder="Enter Task" value="{$task->getTask()}" id="taskInput{$task->getId()}">
@@ -57,6 +63,18 @@
 			</div>
 
 		</div>
+
+		{if $user->isInRole("admin")}
+			<div class="col-xl-2">
+				<label for="userId">Select user</label>
+				<select class="form-control" id="userSelect">
+					<option value="all">All</option>
+					{foreach $users as $userEntity}
+						<option value="{$userEntity->getUsername()}">{$userEntity->getUsername()}</option>
+					{/foreach}
+				</select>
+			</div>
+		{/if}
 	</div>
 
 	<!-- Add task Modal-->
@@ -73,11 +91,10 @@
 				<form n:name=addTaskForm>
 					<div class="modal-body">
 						
-							<!-- Jednoduché vykreslení chyb -->
 							<ul class="errors" n:if="$form->hasErrors()">
 								<li n:foreach="$form->errors as $error">{$error}</li>
 							</ul>
-							{* Formulář *}
+							
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Enter Task" n:name=task>
 							</div>
@@ -99,9 +116,10 @@
 
 {block scripts}
 
-	<script src="{$basePath}/js/editTask.js"></script>
-
 	{include parent}
+
+	<script src="{$basePath}/js/editTask.js"></script>
+	<script src="{$basePath}/js/filterTable.js"></script>
 
 {/block}
 

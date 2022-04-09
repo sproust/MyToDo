@@ -3,7 +3,6 @@
 namespace App\Presenters;
 
 use App\Model\Database\EntityManager;
-use App\Forms\EditTaskFormFactory;
 use DateTime;
 use Exception;
 
@@ -16,16 +15,17 @@ class TaskPresenter extends AuthenticatedPresenter
      */
     public $entityManager;
 
-    public function handleEdit($taskId, $taskText, $deadline) {
-		if ($this->isAjax()) {
+    public function handleEdit($taskId, $taskText, $deadline)
+    {
+        if ($this->isAjax()) {
 
             $taskRepository = $this->entityManager->getTaskRepository();
             $task = $taskRepository->getTask($taskId);
 
             $deadline = new DateTime($deadline);
 
-			try {
-				$task->setTask($taskText);
+            try {
+                $task->setTask($taskText);
                 $task->setDeadline($deadline);
                 $task->setEditedAt();
 
@@ -33,11 +33,16 @@ class TaskPresenter extends AuthenticatedPresenter
                 $this->entityManager->flush();
 
                 $this->redrawControl("tasks");
-                
-			} catch (Exception $e) {
-				
-			}
-
+            } catch (Exception $e) {
+            }
         }
-	}
+    }
+
+    public function getUsers()
+    {
+        $userRepository = $this->entityManager->getUserRepository();
+        $users = $userRepository->getAllUsers();
+
+        return $users;
+    }
 }
