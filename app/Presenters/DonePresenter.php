@@ -17,7 +17,6 @@ final class DonePresenter extends TaskPresenter
 
 	public function renderDefault(): void
 	{
-
 		$taskRepository = $this->entityManager->getTaskRepository();
 		$tasks = $taskRepository->getUsersDoneTasks($this->getUser()->getId());
 
