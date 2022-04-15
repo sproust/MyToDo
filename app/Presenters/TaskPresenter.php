@@ -37,12 +37,4 @@ class TaskPresenter extends AuthenticatedPresenter
             }
         }
     }
-
-    public function getUsers()
-    {
-        $userRepository = $this->entityManager->getUserRepository();
-        $users = $userRepository->getAllUsers();
-
-        return $users;
-    }
 }

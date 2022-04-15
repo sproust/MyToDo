@@ -2,45 +2,56 @@
 {block content}
 	<div class="row">
 
-		<div class="col-xl-7">
+		<div class="col-xl-8">
 
 			<div class="row">
-				<div class="col">
+				<div class="col-lg">
 					<h3 n:block=title>Done</h3>
 				</div>
+				{if $user->isInRole("admin")}
+					<div class="col-lg-4">
+						<select class="form-control float-right" id="userSelect">
+							<option value="all">All</option>
+							{foreach $users as $userEntity}
+								<option value="{$userEntity->getUsername()}">{$userEntity->getUsername()}</option>
+							{/foreach}
+						</select>
+					</div>
+				{/if}
 			</div>
 
 			<div class="row mt-3">
-				<div n:snippet="tasks">
-					<table class="table table-hover text-center text-nowrap">
-						<thead>
-							<tr>
-								{if $user->isInRole("admin")}
-									<td>User</td>
-								{/if}
-								<th style="width: 400px;">Task</th>
-								<th style="width: 250px;">Deadline</th>
-								<th>Done in</th>
-								<th>Edit</th>
-								<th>Complete</th>
-							</tr>
-						</thead>
-						<tbody>
-							{if $tasks}
-								{foreach $tasks as $task}
+				<div class="table-responsive">
+					<div n:snippet="tasks">
+						<table class="table table-hover text-center" id="tasksTable">
+							<thead>
+								<tr>
+									{if $user->isInRole("admin")}
+										<td>User</td>
+									{/if}
+									<th>Task</th>
+									<th>Deadline</th>
+									<th>Done in</th>
+									<th>Edit</th>
+									<th>Complete</th>
+								</tr>
+							</thead>
+							<tbody>
+								{if $tasks}
+									{foreach $tasks as $task}
 										<tr>
 											{if $user->isInRole("admin")}
-												<td>{$task->getUser()->getUsername()}</td>
+												<td class="align-middle">{$task->getUser()->getUsername()}</td>
 											{/if}
 											<td class="align-middle" id="task{$task->getId()}">
 												<div id="taskDiv{$task->getId()}">{$task->getTask()}</div>
 												<input type="text" class="form-control d-none" placeholder="Enter Task" value="{$task->getTask()}" id="taskInput{$task->getId()}">
 											</td>
-											<td class="align-middle" id="deadline{$task->getId()}">
+											<td class="align-middle text-nowrap" id="deadline{$task->getId()}">
 												<div id="deadlineDiv{$task->getId()}">{date_format($task->getDeadline(), "d.m.Y H:i")}</div>
 												<input type="datetime-local" class="form-control d-none" placeholder="Deadline" value="{str_replace(' ', 'T', date_format($task->getDeadline(), 'Y-m-d H:i'))}" id="deadlineInput{$task->getId()}">
 											</td>
-											<td class="align-middle">{date_format($task->getEditedAt(), "d.m.Y H:i")}</td>
+											<td class="align-middle text-nowrap">{date_format($task->getEditedAt(), "d.m.Y H:i")}</td>
 											<td class="align-middle">
 												<i class="fa fa-edit editIcon pointer fa-lg" onclick="editTask({$task->getId()})" id="icon{$task->getId()}"></i>
 												<i class="fa fa-check-square editIcon pointer fa-lg d-none" onclick="submitTask({$task->getId()})" id="submitIcon{$task->getId()}" data-url="{link edit!}"></i>
@@ -48,29 +59,19 @@
 											
 											<td class="align-middle"><a n:href="undone! $task->getId()" type="button" class="btn btn-primary btn-sm ajax">Undone</a></td>
 										</tr>
-								{/foreach}
-							{else}
-								<tr>
-									<td colspan="4">You haven't done any tasks you little piece of shit! Do Something!</td>
-								</tr>
-							{/if}
-						</tbody>
-					</table>
+									{/foreach}
+								{else}
+									<tr>
+										<td colspan="{if $user->isInRole('admin')}6{else}5{/if}">You haven't done any tasks you little piece of shit! Do Something!</td>
+									</tr>
+								{/if}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		{if $user->isInRole("admin")}
-			<div class="col-xl-2">
-				<label for="userId">Select user</label>
-				<select class="form-control" id="userSelect">
-					<option value="all">All</option>
-					{foreach $users as $userEntity}
-						<option value="{$userEntity->getUsername()}">{$userEntity->getUsername()}</option>
-					{/foreach}
-				</select>
-			</div>
-		{/if}
 	</div>
 {/block}
 

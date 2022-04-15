@@ -1,0 +1,34 @@
+{block content}
+	{if !$user->isInRole("admin")}
+		{include '../Error/403.latte'}
+	{else}
+		<div class="row">
+
+			<div class="col-xl-8">
+
+				<div class="row">
+					<div class="col-lg-5">
+						<h3 n:block=title>User management</h3>
+					</div>
+				</div>
+
+				<div class="row mt-3">
+					
+				</div>
+
+			</div>
+		</div>
+	{/if}
+
+{/block}
+
+{block scripts}
+
+	{include parent}
+
+{/block}
+
+
+{block head}
+
+{/block}

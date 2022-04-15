@@ -13,4 +13,12 @@ class AuthenticatedPresenter extends BasePresenter
             $this->redirect('Sign:in');
         }
     }
+
+    public function getUsers()
+    {
+        $userRepository = $this->entityManager->getUserRepository();
+        $users = $userRepository->getAllUsers();
+
+        return $users;
+    }
 }

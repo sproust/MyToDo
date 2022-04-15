@@ -1,80 +1,82 @@
 {block content}
 	<div class="row">
 
-		<div class="col-xl-7">
+		<div class="col-xl-8">
 
 			<div class="row">
-				<div class="col">
+				<div class="col-lg-5">
 					<h3 n:block=title>To be done</h3>
 				</div>
-				<div class="col">
-					<button class="btn btn-primary ml-5 float-right" data-toggle="modal" data-target="#addTaskModal" style="height: 50px;">Add task</button>
+				<div class="col-lg-7">
+					<div class="row">
+						{if $user->isInRole("admin")}
+							<div class="col-lg-8">
+								<select class="form-control" id="userSelect">
+									<option value="all">All</option>
+									{foreach $users as $userEntity}
+										<option value="{$userEntity->getUsername()}">{$userEntity->getUsername()}</option>
+									{/foreach}
+								</select>
+							</div>
+						{/if}
+						<div class="col-lg-4 ml-auto">
+							<button class="btn btn-primary float-right w-100" data-toggle="modal" data-target="#addTaskModal" style="height: 50px;">Add task</button>
+						</div>
+					</div>
 				</div>
 			</div>
 
 			<div class="row mt-3">
-				<div class="col" n:snippet="tasks">
-					<table class="table table-hover text-center text-nowrap" id="tasksTable">
-						<thead>
-							<tr>
-								{if $user->isInRole("admin")}
-									<td>User</td>
-								{/if}
-								<th style="width: 400px;">Task</th>
-								<th style="width: 250px;">Deadline</th>
-								<th>Edit</th>
-								<th>Complete</th>
-							</tr>
-						</thead>
-						<tbody>
-							{if $tasks}
-								{foreach $tasks as $task}
-									<tr>
-										{if $user->isInRole("admin")}
-											<td>{$task->getUser()->getUsername()}</td>
-										{/if}
-										<td class="align-middle" id="task{$task->getId()}">
-											<div id="taskDiv{$task->getId()}">{$task->getTask()}</div>
-											<input type="text" class="form-control d-none" placeholder="Enter Task" value="{$task->getTask()}" id="taskInput{$task->getId()}">
-										</td>
-										<td class="align-middle" id="deadline{$task->getId()}">
-											<div id="deadlineDiv{$task->getId()}">{date_format($task->getDeadline(), "d.m.Y H:i")}</div>
-											<input type="datetime-local" class="form-control d-none" placeholder="Deadline" value="{str_replace(' ', 'T', date_format($task->getDeadline(), 'Y-m-d H:i'))}" id="deadlineInput{$task->getId()}">
-										</td>
-
-										<td class="align-middle">
-											<i class="fa fa-edit editIcon pointer fa-lg" onclick="editTask({$task->getId()})" id="icon{$task->getId()}"></i>
-											<i class="fa fa-check-square editIcon pointer fa-lg d-none" onclick="submitTask({$task->getId()})" id="submitIcon{$task->getId()}" data-url="{link edit!}"></i>
-										</td>							
-										
-										<td class="align-middle"><a n:href="done! $task->getId()" type="button" class="btn btn-primary btn-sm ajax">Done</a></td>
-									</tr>
-								{/foreach}
-							{else}
+				<div class="table-responsive">
+					<div n:snippet="tasks">
+						<table class="table table-hover text-center" id="tasksTable">
+							<thead>
 								<tr>
-									<td colspan="4">You have no tasks to be done Mr. I'vedoneeverytaskihad</td>
+									{if $user->isInRole("admin")}
+										<td>User</td>
+									{/if}
+									<th>Task</th>
+									<th>Deadline</th>
+									<th>Edit</th>
+									<th>Complete</th>
 								</tr>
-							{/if}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{if $tasks}
+									{foreach $tasks as $task}
+										<tr>
+											{if $user->isInRole("admin")}
+												<td>{$task->getUser()->getUsername()}</td>
+											{/if}
+											<td class="align-middle" id="task{$task->getId()}">
+												<div id="taskDiv{$task->getId()}">{$task->getTask()}</div>
+												<input type="text" class="form-control d-none" placeholder="Enter Task" value="{$task->getTask()}" id="taskInput{$task->getId()}">
+											</td>
+											<td class="align-middle text-nowrap" id="deadline{$task->getId()}">
+												<div id="deadlineDiv{$task->getId()}">{date_format($task->getDeadline(), "d.m.Y H:i")}</div>
+												<input type="datetime-local" class="form-control d-none" placeholder="Deadline" value="{str_replace(' ', 'T', date_format($task->getDeadline(), 'Y-m-d H:i'))}" id="deadlineInput{$task->getId()}">
+											</td>
 
-					
+											<td class="align-middle">
+												<i class="fa fa-edit editIcon pointer fa-lg" onclick="editTask({$task->getId()})" id="icon{$task->getId()}"></i>
+												<i class="fa fa-check-square editIcon pointer fa-lg d-none" onclick="submitTask({$task->getId()})" id="submitIcon{$task->getId()}" data-url="{link edit!}"></i>
+											</td>							
+											
+											<td class="align-middle"><a n:href="done! $task->getId()" type="button" class="btn btn-primary btn-sm ajax">Done</a></td>
+										</tr>
+									{/foreach}
+								{else}
+									<tr>
+										<td colspan="{if $user->isInRole('admin')}5{else}4{/if}">You have no tasks to be done Mr. I'vedoneeverytaskihad</td>
+									</tr>
+								{/if}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 
 		</div>
-
-		{if $user->isInRole("admin")}
-			<div class="col-xl-2">
-				<label for="userId">Select user</label>
-				<select class="form-control" id="userSelect">
-					<option value="all">All</option>
-					{foreach $users as $userEntity}
-						<option value="{$userEntity->getUsername()}">{$userEntity->getUsername()}</option>
-					{/foreach}
-				</select>
-			</div>
-		{/if}
 	</div>
 
 	<!-- Add task Modal-->

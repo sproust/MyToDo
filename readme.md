@@ -1,5 +1,10 @@
 # MyToDo
 
+## ToDo
+
+- User management (deleteting users, setting state (active, inactive))
+- Notification system
+
 ## Requirements
 
 - Docker
